@@ -11,6 +11,7 @@
 #   curl -fsSL https://install.swall.app | bash
 #
 # After installation, run `swall setup` to configure your environment.
+# (source of truth lives at 30xcompany/swall — this is a mirrored copy)
 #
 set -euo pipefail
 
