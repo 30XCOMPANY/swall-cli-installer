@@ -93,9 +93,25 @@ install_cli_brew() {
 install_cli_binary() {
   info "Installing Swall CLI from GitHub Releases..."
 
-  # Get latest release tag from the public binary mirror
+  # Get latest release tag from the public binary mirror.
+  # GitHub redirects /releases/latest → /releases/tag/<TAG> when a release
+  # exists, or → /releases when the repo has no releases yet. We must
+  # distinguish: if the Location doesn't contain "/tag/", bail out.
   local latest
-  latest=$(curl -sI "$RELEASES_WEB_URL/releases/latest" 2>/dev/null | grep -i '^location:' | sed 's/.*tag\///' | tr -d '\r\n' || true)
+  local location
+  location=$(curl -sI "$RELEASES_WEB_URL/releases/latest" 2>/dev/null | grep -i '^location:' | tr -d '\r\n' || true)
+  case "$location" in
+    *"/tag/"*)
+      latest=$(printf '%s' "$location" | sed 's/.*tag\///')
+      ;;
+    *)
+      fail "No releases published yet at $RELEASES_WEB_URL.
+If you're installing from a fresh setup, wait a few minutes for the
+release workflow to finish, then retry. If this persists, report at
+https://github.com/30xcompany/swall-cli-installer/issues."
+      ;;
+  esac
+
   if [ -z "$latest" ]; then
     fail "Could not determine latest release. Check your network connection."
   fi
@@ -145,8 +161,15 @@ add_to_path() {
 }
 
 get_latest_version() {
-  # grep exits 1 when no match; use `|| true` to avoid triggering pipefail
-  curl -sI "$RELEASES_WEB_URL/releases/latest" 2>/dev/null | grep -i '^location:' | sed 's/.*tag\///' | tr -d '\r\n' || true
+  # Returns empty string when no release exists (rather than the raw Location
+  # header, which would break downstream string comparisons). grep exits 1
+  # when no match; use `|| true` to avoid triggering pipefail.
+  local location
+  location=$(curl -sI "$RELEASES_WEB_URL/releases/latest" 2>/dev/null | grep -i '^location:' | tr -d '\r\n' || true)
+  case "$location" in
+    *"/tag/"*) printf '%s' "$location" | sed 's/.*tag\///' ;;
+    *)         printf '' ;;
+  esac
 }
 
 upgrade_cli_brew() {
