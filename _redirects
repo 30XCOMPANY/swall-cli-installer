@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects. 200 means "serve this file but keep the URL".
+# That's how https://install.swall.app/ returns install.sh directly to curl,
+# the same trick Bun / Deno / rustup use.
+
+/          /install.sh        200
+/sh        /install.sh        200
+/ps        /install.ps1       200
+/ps1       /install.ps1       200
+/windows   /install.ps1       200

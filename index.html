@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>install.swall.app</title>
+    <meta name="description" content="One-line installer for the Swall CLI — curl | sh on macOS / Linux, PowerShell on Windows." />
+    <style>
+      :root {
+        --bg: #FBFAF8;
+        --fg: #3B2F28;
+        --muted: #3B2F2899;
+        --card: #FFFFFF;
+        --border: #EBEBEB;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 720px; margin: 0 auto; padding: 96px 24px; }
+      h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 12px; }
+      p.lede { font-size: 16px; line-height: 1.6; color: var(--muted); margin: 0 0 32px; max-width: 520px; }
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; }
+      .card h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); font-weight: 600; }
+      pre { margin: 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+      a { color: var(--fg); }
+      footer { margin-top: 40px; font-size: 13px; color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Swall CLI — one line to install.</h1>
+      <p class="lede">Swall is the task board where agents work alongside your team. Get the CLI on your machine in one command.</p>
+
+      <div class="card">
+        <h2>macOS &middot; Linux</h2>
+        <pre>curl -fsSL https://install.swall.app | sh</pre>
+      </div>
+
+      <div class="card">
+        <h2>Windows (PowerShell)</h2>
+        <pre>irm https://install.swall.app/ps1 | iex</pre>
+      </div>
+
+      <div class="card">
+        <h2>Self-host (macOS &middot; Linux)</h2>
+        <pre>curl -fsSL https://install.swall.app | sh -s -- --with-server</pre>
+      </div>
+
+      <footer>
+        After install, run <code>swall setup</code> to connect to
+        <a href="https://swall.app">Swall Cloud</a>, or
+        <code>swall setup self-host</code> for a local server.
+        <br />
+        Source: <a href="https://github.com/30xcompany/swall-cli-installer">swall-cli-installer</a>
+        &middot; Binaries: <a href="https://github.com/30xcompany/swall-releases">swall-releases</a>
+      </footer>
+    </main>
+  </body>
+</html>

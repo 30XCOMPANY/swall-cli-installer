@@ -1,0 +1,14 @@
+# Force plaintext Content-Type for curl | sh to work correctly.
+# Without this Cloudflare serves install.sh as text/plain with UTF-8
+# which is fine — but we also disable long caching so new releases
+# of the installer propagate quickly.
+
+/install.sh
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=300
+  X-Content-Type-Options: nosniff
+
+/install.ps1
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=300
+  X-Content-Type-Options: nosniff
